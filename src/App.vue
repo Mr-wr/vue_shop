@@ -1,32 +1,52 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition :name="transitionName">
+      <router-view />
+    </transition>
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return { transitionName: "" };
+  },
+  // 监听,当路由发生变化的时候执行
+  watch: {
+    $route(to, from) {
+      // 实现路由跳转动画;
+      if (to.meta.index > from.meta.index) this.transitionName = "slide-left";
+      if (to.meta.index < from.meta.index) this.transitionName = "slide-right";
+    },
+  },
+};
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
 }
 
-#nav {
-  padding: 30px;
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-100%);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translateX(100%);
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.slide-left-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translateX(-100%);
 }
 </style>
