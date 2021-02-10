@@ -21,6 +21,14 @@ const routes = [
         },
         component: () => import("@/views/home/children/Welcome"),
       },
+      {
+        path: "/users",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/userManagement/UserList"),
+      },
+      {
+        path: "/roles",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/authorityManagement/RoleList"),
+      },
     ],
   },
   {

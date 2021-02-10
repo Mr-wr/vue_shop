@@ -6,7 +6,7 @@
         <!-- 头部分布 -->
         <el-row>
           <el-col style="" :span="4">
-            <div class="grid-content bg-purple"><img src="" alt="" /> 这是一个logo</div>
+            <div class="grid-content bg-purple" @click="getHome"><img src="" alt="" /> 这是一个logo</div>
           </el-col>
           <el-col style="" :span="18">
             <div class="grid-content bg-purple-light">
@@ -44,7 +44,7 @@
               <!-- 二级菜单 -->
               <el-menu-item v-for="child in item.children" :key="child.id" :index="child.path">
                 <i class="el-icon-location"></i>
-                <span>{{ item.authName }}</span>
+                <span>{{ child.authName }}</span>
               </el-menu-item>
             </el-submenu>
           </el-menu>
@@ -95,6 +95,10 @@ export default {
     // 导航菜单折叠和张开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
+    },
+    // 跳转到home主页
+    getHome() {
+      this.$router.push("/home");
     },
   },
 };
