@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "",
-    redirect: "/Login",
+    redirect: "/login",
   },
   {
     path: "/home",
@@ -16,7 +16,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ "@/views/home/Home"),
   },
   {
-    path: "/index2",
+    path: "/test",
     meta: {
       index: 3,
     },
@@ -39,11 +39,10 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log();
+  if (to.path === "/login") return next();
+  const token = window.sessionStorage.getItem("token");
+  if (!token) return next("/login");
   next();
 });
-router.afterEach((to, from) => {
-  // this.$load.show();
-  console.log("console.log(this);", this);
-});
+router.afterEach((to, from) => {});
 export default router;

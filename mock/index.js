@@ -31,7 +31,8 @@ export default {
     if (password === "123" && username === "admin") {
       return res.json({
         status: "ok",
-        token: "sdfsdfsdfdsf",
+        token:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1ODMyODgxNjMsImV4cCI6MTU4MzM3NDU2M30.LBFXgTMuRJ-D3ozdcdhqRQ10Uou91V-Fuk98PoneaPA",
       });
     } else {
       return res.json({
