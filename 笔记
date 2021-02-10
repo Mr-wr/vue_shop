@@ -11,3 +11,8 @@
   // 使用单引号
   "singleQuote":ture
 }
+
+
+--------------------------------导航菜单
+ :unique-opened="true"是否全部打开
+中的index是path

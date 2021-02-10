@@ -3,17 +3,25 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "",
-    redirect: "/login",
-  },
+  { path: "", redirect: "/login" },
   {
     path: "/home",
+    redirect: "/welcome",
     meta: {
       index: 2,
       title: "首页",
     },
     component: () => import(/* webpackChunkName: "about" */ "@/views/home/Home"),
+    children: [
+      {
+        path: "/welcome",
+        meta: {
+          index: 3,
+          title: "首页",
+        },
+        component: () => import("@/views/home/children/Welcome"),
+      },
+    ],
   },
   {
     path: "/test",

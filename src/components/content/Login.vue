@@ -32,8 +32,8 @@ export default {
     return {
       labelPosition: "right",
       formLabelAlign: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123456",
       },
       loginFormRules: {
         username: [
@@ -57,19 +57,19 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           request({
-            url: "/api/login/account",
+            url: "/login",
             method: "post",
             data: this.formLabelAlign,
             // data:
             //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1ODMyODgxNjMsImV4cCI6MTU4MzM3NDU2M30.LBFXgTMuRJ-D3ozdcdhqRQ10Uou91V-Fuk98PoneaPA",
           }).then(res => {
             console.log(res);
-            if (res.code == "403") {
-              this.$message.error(res.status);
-            } else {
-              this.$message.success(res.status);
-              window.sessionStorage.setItem("token", res.token);
+            if (res.meta.status == "200") {
+              this.$message.success(res.meta.msg);
+              window.sessionStorage.setItem("token", res.data.token);
               this.$router.push("/home");
+            } else {
+              this.$message.success(res.meta.msg);
             }
           });
         } else {

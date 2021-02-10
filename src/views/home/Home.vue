@@ -3,156 +3,135 @@
     <el-container class="container">
       <!-- 头部 -->
       <el-header class="header">
-        <!--  -->
+        <!-- 头部分布 -->
         <el-row>
-          <el-col style="border:1px solid black" :span="4"
-            ><div class="grid-content bg-purple"><img src="" alt="" /> 这是一个logo</div></el-col
-          >
-          <el-col style="border:1px solid black" :span="18"
-            ><div class="grid-content bg-purple-light"><h3>xx电商管理后台</h3></div></el-col
-          >
-          <el-col style="border:1px solid black" :span="2"
-            ><div class="grid-content bg-purple"></div>
-            <a href="#" @click="logout">退出</a></el-col
-          >
+          <el-col style="" :span="4">
+            <div class="grid-content bg-purple"><img src="" alt="" /> 这是一个logo</div>
+          </el-col>
+          <el-col style="" :span="18">
+            <div class="grid-content bg-purple-light">
+              <h3>xx电商管理后台</h3>
+            </div>
+          </el-col>
+          <el-col style="" :span="2">
+            <div class="grid-content bg-purple"></div>
+            <el-button style="background:#ccc;" @click="logout">退出</el-button>
+          </el-col>
         </el-row>
       </el-header>
       <!-- 中部 -->
       <el-container>
-        <!-- 左侧导航栏 -->
-        <el-aside class="aside" width="200px">
-          <el-menu :unique-opened="true">
-            <!-- 1 -->
-            <el-submenu index="1">
+        <el-aside class="aside" :width="isCollapse ? '64px' : '200px'">
+          <!-- 导航标识 -->
+          <div class="toggle-button" @click="toggleCollapse">|||</div>
+          <!-- 左侧导航栏 -->
+          <el-menu
+            :collapse-transition="false"
+            :collapse="isCollapse"
+            :unique-opened="true"
+            background-color="#333744"
+            text-color="#fff"
+            active-text-color="#409eff"
+            router
+          >
+            <!-- 一级菜单 -->
+            <el-submenu :index="item.path" v-for="(item, index) in menusList" :key="index">
+              <!-- 标题显示 -->
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>用户管理</span>
+                <span>{{ item.authName }}</span>
               </template>
-              <el-menu-item>
+              <!-- 二级菜单 -->
+              <el-menu-item v-for="child in item.children" :key="child.id" :index="child.path">
                 <i class="el-icon-location"></i>
-                <span>角色列表</span>
+                <span>{{ item.authName }}</span>
               </el-menu-item>
-              <el-submenu index="1-1">
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1-1">选项1</el-menu-item>
-                <el-menu-item index="1-1-2">选项2</el-menu-item>
-              </el-submenu>
-            </el-submenu>
-            <!-- 2 -->
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>权限管理</span>
-              </template>
-              <el-menu-item>
-                <i class="el-icon-location"></i>
-                <span>角色列表</span>
-              </el-menu-item>
-              <el-menu-item>
-                <i class="el-icon-location"></i>
-                <span>权限列表</span>
-              </el-menu-item>
-              <el-submenu index="1-1">
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1-1">选项1</el-menu-item>
-                <el-menu-item index="1-1-2">选项2</el-menu-item>
-              </el-submenu>
-            </el-submenu>
-            <!-- 3 -->
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>商品管理</span>
-              </template>
-              <el-menu-item>
-                <i class="el-icon-location"></i>
-                <span>角色列表</span>
-              </el-menu-item>
-              <el-submenu index="1-1">
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1-1">选项1</el-menu-item>
-                <el-menu-item index="1-1-2">选项2</el-menu-item>
-              </el-submenu>
-            </el-submenu>
-            <!-- 4 -->
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>订单管理</span>
-              </template>
-              <el-menu-item>
-                <i class="el-icon-location"></i>
-                <span>角色列表</span>
-              </el-menu-item>
-              <el-submenu index="1-1">
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1-1">选项1</el-menu-item>
-                <el-menu-item index="1-1-2">选项2</el-menu-item>
-              </el-submenu>
-            </el-submenu>
-            <!-- 5 -->
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>数据统计</span>
-              </template>
-              <el-menu-item>
-                <i class="el-icon-location"></i>
-                <span>角色列表</span>
-              </el-menu-item>
-              <el-submenu index="1-1">
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1-1">选项1</el-menu-item>
-                <el-menu-item index="1-1-2">选项2</el-menu-item>
-              </el-submenu>
             </el-submenu>
           </el-menu>
         </el-aside>
         <!-- 中间部分 -->
-        <el-main class="main">Main</el-main>
+        <el-main class="main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 <script>
+import { getHomeMenus } from "@/network/home";
+import { request } from "@/network/request";
 export default {
+  components: { request, getHomeMenus },
   data() {
-    const item = {
-      date: "2016-05-02",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄",
-    };
     return {
-      tableData: Array(20).fill(item),
+      menusList: [],
+      iconsObj: {},
+      isCollapse: false,
     };
   },
+  created() {
+    // 获取左侧菜单数据
+    this.getHomeMenus();
+  },
   methods: {
+    // 获取左侧菜单数据
+    getHomeMenus() {
+      getHomeMenus({ url: "/menus" })
+        .then(result => {
+          const { data, meta } = result;
+          if (meta.status !== 200) return this.$message.error(meta.msg);
+          this.menusList = data;
+          console.log("获取左侧菜单数据", this.menusList);
+        })
+        .catch(err => {
+          console.log("获取左侧菜单数据错误", err);
+        });
+    },
+    // 退出按钮
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
+    // 导航菜单折叠和张开
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
+    },
   },
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 .home {
   height: 100vh;
-}
-.container {
-  height: 100%;
+  .container {
+    height: 100%;
+  }
 }
 .header {
   text-align: center;
-  background-color: #b3c0d1;
+  background-color: #373d41;
+  color: #fff;
 }
 .aside {
-  background-color: #d3dce6;
+  background-color: #333744;
 }
 .main {
-  background-color: #e9eef3;
+  background-color: #eaedf1;
   height: 100%;
 }
 .el-header {
   padding: 0;
+}
+.el-aside .el-menu {
+  border-right: none;
+}
+/* 导航标识 */
+.toggle-button {
+  background-color: #4a5064;
+  color: #fff;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.2em;
+  cursor: pointer;
 }
 </style>
