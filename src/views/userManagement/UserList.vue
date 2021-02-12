@@ -46,7 +46,7 @@
               icon="el-icon-edit"
               circle
             ></el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button @click="deleteUser(scope.row)" size="mini" type="danger" icon="el-icon-delete" circle></el-button>
             <!-- 鼠标是否可进入到 tooltip 中 -->
             <el-tooltip :enterable="false" class="item" effect="dark" content="分配角色" placement="top">
               <el-button size="mini" type="warning" icon="el-icon-setting" circle></el-button>
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { addUser, getUserList, getIdUser, alterIdUser, alterUserState } from "@/network/home/userManagement/userManagement";
+import { addUser, getUserList, getIdUser, alterIdUser, alterUserState, deleteUser } from "@/network/home/userManagement";
 import { userVerificationMixin } from "@/components/common/mixin";
 import MyDialog from "@/components/common/dialog/MyDialog";
 export default {
@@ -123,6 +123,7 @@ export default {
     alterUserState,
     alterIdUser,
     addUser,
+    deleteUser,
     MyDialog,
     userVerificationMixin,
   },
@@ -215,10 +216,11 @@ export default {
             .then(res => {
               console.log("添加用户返回信息", res);
               const { data, meta } = res;
-              if (meta.status !== 201) {
-                return this.$message.error(meta.msg);
+              if (meta.status == 200) {
+                this.$message.success(meta.msg);
+              } else {
+                this.$message.error(meta.msg);
               }
-              this.$message.success(meta.msg);
             })
             .catch(err => {
               console.log("添加用户失败", err);
@@ -252,6 +254,8 @@ export default {
               /* 200表示成功，500表示失败 */
               if (meta.status == 200) {
                 this.$message.success(meta.msg);
+              } else {
+                this.$message.error(meta.msg);
               }
             });
             this.alterDialogVisible = false;
@@ -270,6 +274,39 @@ export default {
         if (meta.status !== 200) return this.$message.error(meta.msg);
         this.alterUserInfoData = data;
       });
+    },
+
+    // 点击删除图标
+    deleteUser(user) {
+      this.$confirm(`此操作将永久删除该用户(${user.username}), 是否继续?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        // 点击确定
+        .then(() => {
+          deleteUser(user.id).then(res => {
+            if (res.meta.status == 200) {
+              this.$message({
+                type: "success",
+                message: `用户${user.username}删除成功`,
+              });
+            } else {
+              this.$message({
+                type: "error",
+                message: `用户${user.username}删除失败`,
+              });
+            }
+          });
+          this.getUserList();
+        })
+        // 点击取消
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

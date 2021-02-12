@@ -62,3 +62,11 @@ export function alterIdUser(id, data) {
     data: data,
   });
 }
+
+// 通过id删除用户
+export function deleteUser(id) {
+  return request({
+    url: "/users/" + id,
+    method: "delete",
+  });
+}

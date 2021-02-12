@@ -29,6 +29,10 @@ const routes = [
         path: "/roles",
         component: () => import(/* webpackChunkName: "about" */ "@/views/authorityManagement/RoleList"),
       },
+      {
+        path: "/rights",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/authorityManagement/Rights"),
+      },
     ],
   },
   {
