@@ -2,6 +2,10 @@
   <div class="login">
     <div class="box">
       <h3 style="text-align:center; margin-bottom:10px;">登入</h3>
+      <!-- 
+        label-position="left"文字对齐
+        label-width="80px" 文字的宽度
+       -->
       <el-form ref="form" size="mini" :rules="loginFormRules" label-position="left" label-width="80px" :model="formLabelAlign">
         <el-form-item label="用户名称" prop="username">
           <el-input prefix-icon="el-icon-s-custom" placeholder="请输入用户名称" v-model="formLabelAlign.username"></el-input>

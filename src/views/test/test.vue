@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import { getHomeMenus } from "@/network/home";
+import { getHomeMenus } from "@/network/home/home";
 import { request } from "@/network/request";
 export default {
   components: { request, getHomeMenus },
