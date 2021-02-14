@@ -25,7 +25,7 @@
 
       <!-- table用户列表区域 -->
       <el-table class="user-table" border stripe :data="userList" style="width: 100%">
-        <el-table-column type="index"></el-table-column>
+        <el-table-column label="#" type="index"></el-table-column>
         <el-table-column prop="username" label="姓名" width="180"> </el-table-column>
         <el-table-column prop="email" label="邮箱" width="180"> </el-table-column>
         <el-table-column prop="mobile" label="电话"> </el-table-column>
@@ -216,8 +216,10 @@ export default {
             .then(res => {
               console.log("添加用户返回信息", res);
               const { data, meta } = res;
-              if (meta.status == 200) {
+              if (meta.status == 201) {
                 this.$message.success(meta.msg);
+                // 重新获取用户
+                this.getUserList();
               } else {
                 this.$message.error(meta.msg);
               }
@@ -229,8 +231,6 @@ export default {
           this.$refs.userForm.resetFields();
           // 关闭提示框
           this.addDialogVisible = false;
-          // 重新获取用户
-          this.getUserList();
         }
       });
     },

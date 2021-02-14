@@ -5,3 +5,6 @@
 a {
   text-decoration: none;
 }
+#app {
+  min-width: 1366px;
+}

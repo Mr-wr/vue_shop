@@ -10,7 +10,7 @@
     <!-- 卡片视图 -->
     <el-card class="box-card">
       <el-table class="user-table" border stripe :data="rightsList" style="width: 100%">
-        <el-table-column type="index"></el-table-column>
+        <el-table-column label="#" type="index"></el-table-column>
         <el-table-column prop="authName" label="权限名称" width="180"> </el-table-column>
         <el-table-column prop="path" label="路径" width="180"> </el-table-column>
         <el-table-column prop="level" label="权限等级">
@@ -44,8 +44,7 @@ export default {
   methods: {
     // 获取权限列表
     getRightsList() {
-      console.log("=======");
-      getRightsList()
+      getRightsList("list")
         .then(res => {
           console.log("获取权限列表", res);
           if (res.meta.status == 200) {

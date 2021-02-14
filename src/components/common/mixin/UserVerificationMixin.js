@@ -18,7 +18,7 @@ export const userVerificationMixin = {
       userRules: {
         username: [
           { required: true, message: "请输入用户名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+          { min: 3, max: 50, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
         password: [
           { required: true, message: "请输入登入密码", trigger: "blur" },
