@@ -49,7 +49,7 @@
             <el-button @click="deleteUser(scope.row)" size="mini" type="danger" icon="el-icon-delete" circle></el-button>
             <!-- 鼠标是否可进入到 tooltip 中 -->
             <el-tooltip :enterable="false" class="item" effect="dark" content="分配角色" placement="top">
-              <el-button size="mini" type="warning" icon="el-icon-setting" circle></el-button>
+              <el-button @click="setRole(scope.row)" size="mini" type="warning" icon="el-icon-setting" circle></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -109,19 +109,33 @@
         </el-form-item>
       </el-form>
     </my-dialog>
+
+    <!-- 添加分配角色对话框 -->
+    <my-dialog title="分配角色" @isShow="alterRoleDialog" :isvisible="alterRoleDialogVisible">
+      <div class="alter-role">
+        <p>当前用户：{{ userRoleData.username }}</p>
+        <p>当前角色：{{ userRoleData.role_name }}</p>
+        <el-select v-model="selectRoleListId" placeholder="请选择">
+          <el-option v-for="item in roleList" :key="item.id" :label="item.roleName" :value="item.id"> </el-option>
+        </el-select>
+      </div>
+    </my-dialog>
   </div>
 </template>
 
 <script>
 import { addUser, getUserList, getIdUser, alterIdUser, alterUserState, deleteUser } from "@/network/home/userManagement";
+import { getRolesList, alterUserIdRole } from "@/network/home/authorityManagement";
 import { userVerificationMixin } from "@/components/common/mixin";
 import MyDialog from "@/components/common/dialog/MyDialog";
 export default {
   components: {
     getUserList,
     getIdUser,
+    getRolesList,
     alterUserState,
     alterIdUser,
+    alterUserIdRole,
     addUser,
     deleteUser,
     MyDialog,
@@ -148,6 +162,14 @@ export default {
       addDialogVisible: false,
       // 控制修改用户对话框显示和隐藏
       alterDialogVisible: false,
+      // 控制修改角色权限对话框显示和隐藏
+      alterRoleDialogVisible: false,
+      // 修改角色权限的用户信息
+      userRoleData: {},
+      // 所有角色权限列表
+      roleList: [],
+      // 选者角色的id
+      selectRoleListId: "",
       // 要修改用户的信息
       alterUserInfoData: {},
       // 用户对象信息
@@ -307,6 +329,59 @@ export default {
             message: "已取消删除",
           });
         });
+    },
+
+    // 点击编辑分配角色按钮
+    setRole(role) {
+      // 获取用户信息
+      this.userRoleData = role;
+      // 获取全部角色数据
+      getRolesList()
+        .then(res => {
+          console.log("获取全部角色数据success", res);
+          const { data, meta } = res;
+          if (meta.status == 200) {
+            this.roleList = data;
+          } else {
+            this.$message.error(res.meta.msg);
+          }
+        })
+        .catch(err => {
+          console.log("获取全部角色数据failure", err);
+        });
+      this.alterRoleDialogVisible = true;
+    },
+
+    // 点击确定和取消分配角色对话框显示from
+    alterRoleDialog(params) {
+      // 点击取消
+      if (!params) {
+        console.log("点击cancel");
+        this.alterRoleDialogVisible = false;
+        // 还原数据
+        this.selectRoleListId = "";
+        return;
+      }
+      // 点击确定 获取选择的数据
+      alterUserIdRole(this.userRoleData.id, { rid: this.selectRoleListId })
+        .then(res => {
+          console.log("更新角色成功", res);
+          if (res.meta.status == 200) {
+            this.$message.success(res.meta.msg);
+          } else {
+            this.$message.error(res.meta.msg);
+          }
+        })
+        .catch(err => {
+          console.log("更新角色失败", err);
+        });
+      // 还原数据
+      this.selectRoleListId = "";
+      // 关闭提示框
+      console.log("点击finish");
+      this.alterRoleDialogVisible = false;
+      // 重新获取数据
+      this.getUserList();
     },
   },
 };

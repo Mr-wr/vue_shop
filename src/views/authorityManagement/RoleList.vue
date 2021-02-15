@@ -42,8 +42,9 @@
                       type="warning"
                       v-for="item3 in item2.children"
                       :key="item3.id"
-                      >{{ item3.authName }}</el-tag
                     >
+                      {{ item3.authName }}
+                    </el-tag>
                   </el-col>
                 </el-row>
               </el-col>
@@ -92,10 +93,10 @@
 </template>
 
 <script>
-import { getRightsList, getRolesList, deleteIdRight, alterIdRRole } from "@/network/home/authorityManagement";
+import { getRightsList, getRolesList, deleteIdRight, alterIdRights } from "@/network/home/authorityManagement";
 import MyDialog from "@/components/common/dialog/MyDialog.vue";
 export default {
-  components: { getRightsList, getRolesList, deleteIdRight, alterIdRRole, MyDialog },
+  components: { getRightsList, getRolesList, deleteIdRight, alterIdRights, MyDialog },
   name: "rights",
   data() {
     return {
@@ -208,7 +209,6 @@ export default {
     setUserDialog(params) {
       // 点击取消
       if (!params) {
-        //
         console.log("点击cancel");
         this.setDialogVisible = false;
         // 还原数据
@@ -219,7 +219,7 @@ export default {
       const keys = [...this.$refs.rightTree.getCheckedKeys(), ...this.$refs.rightTree.getHalfCheckedKeys()];
       let keysStr = keys.join(",");
       console.log("点击确定 获取 全选和半选的数据", keysStr);
-      alterIdRRole(this.roleId, { rids: keysStr })
+      alterIdRights(this.roleId, { rids: keysStr })
         .then(res => {
           console.log("修改right返回数据成功", res);
           if (res.meta.status == 200) {
@@ -232,19 +232,6 @@ export default {
         .catch(err => {
           console.log("修改right返回数据失败", err);
         });
-      // addUser(this.user)
-      //   .then(res => {
-      //     console.log("编辑权限role返回信息", res);
-      //     const { data, meta } = res;
-      //     if (meta.status == 200) {
-      //       this.$message.success(meta.msg);
-      //     } else {
-      //       this.$message.error(meta.msg);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log("编辑role失败", err);
-      //   });
       // 还原数据
       this.treeSelectDefaultL = [];
       // 关闭提示框

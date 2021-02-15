@@ -22,10 +22,19 @@ export function deleteIdRight(roleId, rightId) {
 }
 
 // 根据roleid修改rights
-export function alterIdRRole(roleId, data) {
+export function alterIdRights(roleId, data) {
   return request({
     url: `/roles/${roleId}/rights`,
     method: "post",
+    data,
+  });
+}
+
+// 根据user id修改role
+export function alterUserIdRole(userId, data) {
+  return request({
+    url: `/users/${userId}/role`,
+    method: "put",
     data,
   });
 }
