@@ -7,6 +7,9 @@ import "@/assets/css/base.css";
 import Loading from "@/components/common/loading";
 import Toast from "@/components/common/toast";
 import https from "./network/http";
+import ZkTable from "vue-table-with-tree-grid";
+
+Vue.component("tree-table", ZkTable);
 Vue.config.productionTip = false;
 Vue.use(Loading);
 Vue.use(Toast);

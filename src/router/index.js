@@ -33,6 +33,18 @@ const routes = [
         path: "/rights",
         component: () => import(/* webpackChunkName: "about" */ "@/views/authorityManagement/Rights"),
       },
+      {
+        path: "/goods",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/GoodsList"),
+      },
+      {
+        path: "/categories",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/GoodsCategory"),
+      },
+      {
+        path: "/params",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/CategoryParams"),
+      },
     ],
   },
   {

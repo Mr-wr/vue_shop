@@ -13,6 +13,18 @@ export function getRolesList() {
   });
 }
 
+// 添加角色
+
+// 参数名	参数说明	备注
+// roleName	角色名称	不能为空
+// roleDesc	角色描述	可以为空
+export function addRole(data) {
+  return request({
+    url: "/roles",
+    data,
+  });
+}
+
 // 根据id删除权限
 export function deleteIdRight(roleId, rightId) {
   return request({

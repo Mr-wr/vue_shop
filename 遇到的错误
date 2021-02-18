@@ -15,5 +15,69 @@ npm install --save-dev less-loader@4.1.0 less@3.9.0
 
 
 
+-------------------重置表单问题
+重置表单失败
+Error in v-on handler: "TypeError: Cannot read property 'indexOf' of undefined"
+原因是因为没有在el-form-item中绑定属性prop
+
+
 
 -----------------------------------应用类型传参修改后的问题、const{}赋值问题
+
+----------------------------log打印应用类型问题
+好像只在vue中出现过
+打印的对象在log打印后发生了改变打印的值也会变
+使用log打印出来的对象会随着对象中的值改变，
+在之前打印的值也会被改变
+列如
+addCategoryForm: {
+      // 添加分类名称
+      cat_name: "",
+      // 父级id
+      cat_pid: 0,
+      // 分类等级
+      cat_leven: 0,
+    },
+
+<el-input v-model="addCategoryForm.cat_name"></el-input>
+
+
+resetCategoryDialog() {
+  // 还原表单数据
+  this.addCategoryForm.cat_name = "";
+  // 还原复选框数据
+  this.selectKeys = [];
+  this.addCategoryForm.cat_pid = 0;
+  this.addCategoryForm.cat_leven = 0;
+},
+
+main(){
+  console.log(this.addCategoryForm);//=>addCategoryForm.cat_name = "";addCategoryForm.cat_pid = 0;addCategoryForm.cat_leven = 0;
+  
+  this.resetCategoryDialog();
+}
+
+
+
+------------------------------------默认参数传参数时错误
+Error in v-on handler: "ReferenceError: method is not defined"
+
+found in
+
+export function getAndAddGoodsCategoryList(params = "", method = "get", data = "") {
+  return request({
+    url: "/categories",
+    data,
+    method,
+    params,
+  });
+}
+
+ // 添加分类
+这里报错
+getAndAddGoodsCategoryList("", method="post", this.addCategoryForm);
+Error in v-on handler: "ReferenceError: method is not defined"
+
+found in
+
+原因：传入参数时不用加method

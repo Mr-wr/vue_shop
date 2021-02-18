@@ -12,7 +12,7 @@
       <!-- 添加按钮单独一行 -->
       <el-row>
         <el-col>
-          <el-button type="primary">添加角色</el-button>
+          <el-button @click="addRole" type="primary">添加角色</el-button>
         </el-col>
       </el-row>
 
@@ -89,6 +89,17 @@
       >
       </el-tree>
     </my-dialog>
+    <!-- 添加角色的对话框 -->
+    <my-dialog title="添加用户" @isShow="addRoleDialog" :isvisible="addRoleDialogVisible">
+      <el-form :status-icon="true" :model="roleData" ref="roleDataRef" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="角色名称">
+          <el-input :disabled="true" v-model="roleData.roleName"></el-input>
+        </el-form-item>
+        <el-form-item label="角色描述">
+          <el-input :disabled="true" v-model="roleData.roleDesc"></el-input>
+        </el-form-item>
+      </el-form>
+    </my-dialog>
   </div>
 </template>
 
@@ -103,6 +114,10 @@ export default {
       roleList: [],
       // 设置权限对话框显示否
       setDialogVisible: false,
+      // 添加角色对话框显示否
+      addRoleDialogVisible: false,
+      // 角色信息
+      roleData: {},
       // 根据tree获取到的信息
       rightsList: [],
       // 设置对话框tree中的数据显示
@@ -241,8 +256,11 @@ export default {
       this.getRolesList();
     },
 
-    // 权限设置的对话框中的按钮被点击
-    handleCheckChange() {},
+    // 添加角色的对话框中的按钮被点击
+    addRole() {},
+
+    // 点击确定和取消 add role的对话框显示
+    addRoleDialog() {},
   },
 };
 </script>

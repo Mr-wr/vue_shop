@@ -60,7 +60,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="querInfo.pagenum"
-        :page-sizes="[2, 10, 100, 200]"
+        :page-sizes="[10, 30, 100, 200]"
         :page-size="querInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -152,7 +152,7 @@ export default {
         // 当前页数
         pagenum: 1,
         // 每页显示多少数据
-        pagesize: 2,
+        pagesize: 10,
       },
       // get获取全部的用户信息
       userList: [],
