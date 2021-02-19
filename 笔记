@@ -136,9 +136,31 @@ NProgress.done();
 
 
 
+------------------------------在build中取消console打印命令
+安装插件
+
+npm install babel-plugin-transform-remove-console --save-dev
+
+在.babelrc中声明
+{
+  "plugin":["transfrom-remove-console"]
+}
 
 
+或者在babel.config.js中声明(这种声明会在开发阶段页生效)
+plugins: ["transform-remove-console"],
 
+要进行一下判断
+const proPlugins = [];
+// 发布阶段需要的插件
+if (process.env.NODE_ENV === "production") {
+  proPlugins.push("transform-remove-console");
+}
+
+plugins: [
+    // 发布产品时用的插件
+    ...proPlugins,
+],
 
 
 
