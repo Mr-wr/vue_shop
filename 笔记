@@ -123,7 +123,15 @@ el-tabs中有一个
 
 
 
+----------------------加载条
 
+npm install --save nprogress
+
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+NProgress.start();
+NProgress.done();
 
 
 

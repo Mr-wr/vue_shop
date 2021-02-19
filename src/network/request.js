@@ -1,4 +1,6 @@
 import axios from "axios";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 export function request(config) {
   const instance = axios.create({
     baseURL: "http://www.ysqorz.top:8888/api/private/v1/", //每天两点重置数据http://www.ysqorz.top:8091/vueshop/reset
@@ -12,6 +14,8 @@ export function request(config) {
   instance.interceptors.request.use(
     // 请求成功拦截
     config => {
+      // 进都条
+      NProgress.start();
       // Toast.loading({
       //   duration: 0,
       // });
@@ -28,6 +32,7 @@ export function request(config) {
   );
   instance.interceptors.response.use(
     res => {
+      NProgress.done();
       // Toast.clear();
       console.log(config.url + "相应成功拦截", res);
       return res.data;

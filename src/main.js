@@ -8,15 +8,15 @@ import Loading from "@/components/common/loading";
 import Toast from "@/components/common/toast";
 import https from "./network/http";
 import ZkTable from "vue-table-with-tree-grid";
-import VueQuillEditor from 'vue-quill-editor'
+import VueQuillEditor from "vue-quill-editor";
 
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
-
-Vue.use(VueQuillEditor, /* { default global options } */)
+import "quill/dist/quill.core.css"; // import styles
+import "quill/dist/quill.snow.css"; // for snow theme
+import "quill/dist/quill.bubble.css"; // for bubble theme
 
 
+
+Vue.use(VueQuillEditor /* { default global options } */);
 
 Vue.component("tree-table", ZkTable);
 Vue.config.productionTip = false;
