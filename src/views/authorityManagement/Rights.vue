@@ -49,7 +49,6 @@ export default {
           console.log("获取权限列表", res);
           if (res.meta.status == 200) {
             this.rightsList = res.data;
-            this.$message.success(res.meta.msg);
           } else {
             this.$message.error(res.meta.msg);
           }
