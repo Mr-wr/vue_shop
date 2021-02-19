@@ -88,10 +88,10 @@
   </div>
 </template>
 <script>
-import { getAndAddGoodsCategoryList } from "@/network/home/goodsManagement";
+import { getGoodsCategoryList } from "@/network/home/goodsManagement";
 import MyDialog from "../../components/common/dialog/MyDialog.vue";
 export default {
-  components: { getAndAddGoodsCategoryList, MyDialog },
+  components: { getGoodsCategoryList, MyDialog },
   data() {
     return {
       // 获取商品列表数据对象
@@ -165,12 +165,12 @@ export default {
     };
   },
   created() {
-    this.getAndAddGoodsCategoryList();
+    this.getGoodsCategoryList();
   },
   methods: {
     // 获取商品列表
-    getAndAddGoodsCategoryList() {
-      getAndAddGoodsCategoryList(this.querInfo)
+    getGoodsCategoryList() {
+      getGoodsCategoryList(this.querInfo)
         .then(res => {
           console.log("获取商品分类成功", res);
           const { data, meta } = res;
@@ -187,7 +187,7 @@ export default {
       // 显示添加分类用户对话框
       this.addCategoryDialogVisible = true;
       // 获取父级分类的数据列表
-      getAndAddGoodsCategoryList({ params: { type: 2 } })
+      getGoodsCategoryList({ params: { type: 2 } })
         .then(res => {
           console.log("获取父级分类的数据列表success", res);
           const { data, meta } = res;
@@ -206,14 +206,14 @@ export default {
     handleSizeChange(newSize) {
       console.log("一页显示多少数据", newSize);
       this.querInfo.pagesize = newSize;
-      this.getAndAddGoodsCategoryList();
+      this.getGoodsCategoryList();
     },
 
     // 页码发生改变
     handleCurrentChange(newPage) {
       console.log("页码发生改变", newPage);
       this.querInfo.pagenum = newPage;
-      this.getAndAddGoodsCategoryList();
+      this.getGoodsCategoryList();
     },
 
     // click alter botton
@@ -234,7 +234,7 @@ export default {
       }
       console.log(this.addCategoryForm);
       // 添加分类
-      getAndAddGoodsCategoryList("", "post", this.addCategoryForm)
+      getGoodsCategoryList("", "post", this.addCategoryForm)
         .then(res => {
           console.log("添加分类成功", res);
           if (res.meta.status == 201) {
@@ -245,7 +245,7 @@ export default {
             // 还原数据
             this.resetCategoryDialog();
             // 重新获取数据
-            this.getAndAddGoodsCategoryList();
+            this.getGoodsCategoryList();
           } else {
             this.$message.error(res.meta.msg);
           }

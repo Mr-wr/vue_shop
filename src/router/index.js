@@ -38,6 +38,10 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/GoodsList"),
       },
       {
+        path: "/goods/add",
+        component: () => import("@/views/goodsManagement/AddGoods"),
+      },
+      {
         path: "/categories",
         component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/GoodsCategory"),
       },
