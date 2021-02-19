@@ -83,6 +83,8 @@
           <el-tab-pane label="商品内容" name="4">
             <!-- 文本编辑器 -->
             <quill-editor ref="myQuillEditor" v-model="content" />
+            <!-- 完成按钮 -->
+            <el-button @click="addFailure" type="primary">完成</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -167,6 +169,11 @@ export default {
 
     // 上传成
     upSuccess() {},
+
+    // 点击完成按钮
+    addFailure() {
+      this.$router.push("/goods");
+    },
   },
 };
 </script>
@@ -176,6 +183,4 @@ export default {
 .breadcrumb {
   margin-bottom: 20px;
 }
-
-
 </style>

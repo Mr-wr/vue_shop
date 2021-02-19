@@ -49,6 +49,10 @@ const routes = [
         path: "/params",
         component: () => import(/* webpackChunkName: "about" */ "@/views/goodsManagement/CategoryParams"),
       },
+      {
+        path: "/orders",
+        component: () => import(/* webpackChunkName: "about" */ "@/views/orderManagement/Order"),
+      },
     ],
   },
   {
