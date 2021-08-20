@@ -1,12 +1,22 @@
 <template>
   <div>
-    <el-row class="tac">
+    <!-- 卡片视图 -->
+    <el-card class="box-card">
+      <!-- 面包屑导航区 -->
+      <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>角色列表</el-breadcrumb-item>
+        <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+        {{  this.$route }}
+      </el-breadcrumb>
+    </el-card>
+    <!-- <el-row class="tac">
       <el-col :span="12">
-        <h5>自定义颜色</h5>
-        <!-- 左侧导航栏 -->
-        <el-menu :unique-opened="true" background-color="#333744" text-color="#fff" active-text-color="#409eff">
-          <!-- 一级导航栏 -->
-          <el-submenu :index="item.path" v-for="(item, index) in menusList" :key="index">
+        <h5>自定义颜色</h5> -->
+    <!-- 左侧导航栏 -->
+    <!-- <el-menu :unique-opened="true" background-color="#333744" text-color="#fff" active-text-color="#409eff"> -->
+    <!-- 一级导航栏 -->
+    <!-- <el-submenu :index="item.path" v-for="(item, index) in menusList" :key="index">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>{{ item.authName }}</span>
@@ -17,21 +27,21 @@
             </el-menu-item>
           </el-submenu>
 
-          <el-submenu :index="item.path" v-for="(item, index) in menusList" :key="index + 10">
-            <!-- 标题显示 -->
-            <template slot="title">
+          <el-submenu :index="item.path" v-for="(item, index) in menusList" :key="index + 10"> -->
+    <!-- 标题显示 -->
+    <!-- <template slot="title">
               <i class="el-icon-location"></i>
               <span>{{ item.authName }}</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item v-for="child in item.children" :key="child.id" :index="child.path">
+            </template> -->
+    <!-- 二级菜单 -->
+    <!-- <el-menu-item v-for="child in item.children" :key="child.id" :index="child.path">
               <i class="el-icon-location"></i>
               <span>{{ child.authName }}</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 <script>
@@ -45,7 +55,7 @@ export default {
     };
   },
   created() {
-    this.getHomeMenus();
+    // this.getHomeMenus();
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -68,3 +78,8 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.box-card {
+  margin-top: 20px;
+}
+</style>

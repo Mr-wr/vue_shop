@@ -4,12 +4,7 @@
 
 -------------------less安装错误
 我也不知道什么原因可能是应为版本把
-css-loader
-npm install css-loader@2.0.2 --save-dev
-
-style-loader
-npm install style-loader@0.23.1 --save-dev
-
+版本安装错误
 less-loader
 npm install --save-dev less-loader@4.1.0 less@3.9.0
 

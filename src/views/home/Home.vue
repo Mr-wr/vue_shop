@@ -71,6 +71,7 @@ export default {
   },
   created() {
     // 获取左侧菜单数据
+
     this.getHomeMenus();
   },
   methods: {
@@ -81,7 +82,7 @@ export default {
           const { data, meta } = result;
           if (meta.status !== 200) return this.$message.error(meta.msg);
           this.menusList = data;
-          console.log("获取左侧菜单数据", this.menusList);
+          console.log("获取左侧菜单数据", this.menusList, this.$route);
         })
         .catch(err => {
           console.log("获取左侧菜单数据错误", err);

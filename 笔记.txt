@@ -164,16 +164,39 @@ plugins: [
 
 
 
+---------------------------修改打包入口默认（main.js）
 
 
 
 
+------------------------使用externals优化文件体积
+原理：会先去windows中找
+凡是通过externals中声明中的第三方包都不会打包到最终js文件中
+
+使用:
+在发布中声明
+// 使用externals优化文件
+    config.set("externals", {
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      axios: "axios",
+      lodash: "_",
+      nprogress: "NProgress",
+      "vue-quill-editor": "VueQuillEditor",
+    });
+在index.html中引用样式表、js文件（link）
 
 
+---------------------------修改首页内容
+通过一个字段来判定
+在配置中
+config.plugin("html").tap(args=>{
+  // 添加一个参数来判断
+  args[0].isProd = true
+})
 
-
-
-
+在首页中
+<title><%=htmlWebpackPlugin.options.isProd?"":"dev-"%></title>
 
 
 

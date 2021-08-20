@@ -1,28 +1,39 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import NewRoute from "./new_test_route";
 Vue.use(VueRouter);
 
 const routes = [
+  NewRoute,
   { path: "", redirect: "/login" },
   {
     path: "/home",
     redirect: "/welcome",
     meta: {
-      index: 2,
       title: "首页",
     },
     component: () => import(/* webpackChunkName: "about" */ "@/views/home/Home"),
     children: [
       {
+        path: "/welcome1",
+        meta: {
+          title: "欢迎1",
+        },
+        component: () => import("@/views/home/children/Welcome"),
+      },
+      {
         path: "/welcome",
         meta: {
-          index: 3,
-          title: "首页",
+          title: "欢迎",
         },
         component: () => import("@/views/home/children/Welcome"),
       },
       {
         path: "/users",
+        name: "用户管理",
+        meta: {
+          title: "用户管理",
+        },
         component: () => import(/* webpackChunkName: "about" */ "@/views/userManagement/UserList"),
       },
       {

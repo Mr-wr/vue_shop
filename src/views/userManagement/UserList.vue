@@ -1,12 +1,16 @@
 <template>
   <div class="user">
-    <!-- 面包屑导航区 -->
-    <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
-
+    <div>
+      <transition-group name="breadcrumb">
+        <!-- 面包屑导航区 -->
+        <!-- <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+          <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+        </el-breadcrumb> -->
+        
+      </transition-group>
+    </div>
     <!-- 卡片视图 -->
     <el-card class="box-card">
       <!-- search -->
@@ -185,11 +189,16 @@ export default {
     this.getUserList();
   },
   methods: {
+    // 测试使用面包屑用route自动写入
+    test() {
+      console.log();
+    },
+
     // 获取用户信息
     getUserList() {
       getUserList(this.querInfo)
         .then(res => {
-          console.log("获取去管理员列表success", res);
+          console.log("获取去管理员列表success", res, this.$route);
           const { data, meta } = res;
           if (meta.status != 200) return this.$message.error(meta.msg);
           this.userList = data.users;
@@ -387,7 +396,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* 面包屑 */
 .breadcrumb {
   margin-bottom: 20px;
@@ -402,5 +411,17 @@ export default {
 /* 用户列表 */
 .user-table {
   margin-bottom: 20px;
+}
+
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 8px;
+
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
+  }
 }
 </style>
